@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment3 Part2</title>
+    <style>
+        .numbers {
+            background-color: Transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            font-size: 85px;
+            margin: 60px;
+            padding: 15px;
+        }
+        
+        body {
+            text-align: center;
+            font-size: 20px;
+            font-family: Raleway, sans-serif;
+            background: linear-gradient(to right, #4776e6, #8e54e9);
+        }
+        
+        .header {
+            font-size: 28px;
+            padding: 30px;
+            font-family: Raleway, sans-serif;
+            background-color: black;
+            margin: 0px;
+            color: white;
+        }
+        
+        button {
+            background-color: rgb(38, 38, 38);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 18px;
+            border-radius: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">The Game </div>
+    <br/>
+    <div>
+        <button type="button" onclick="startGame();">Start Game</button>
+        <button type="button" onclick="stopGame();">Stop Game</button>
+    </div>
+    <br/>
+
+    <div id="game">
+        <h1 style="display:none;font-size:32px;font-family:'Book Antiqua'" id="a1">Your chosen number is : <span id="num" style="color:white;"></span></h1>
+        <br/>
+        <h1 style="display:none;font-size:32px;font-family:'Book Antiqua'" id="a2">Your score till now is: <span id="score" style="color:white;"></span>
+  </h1>
+        <br/>
+        <button class="numbers" id="1" onclick="updateScore(1);"><span id="number1" style="color:black
+;"></span></button>
+        <button class="numbers" id="2" onclick="updateScore(2);"><span id="number2" style="color:black;"></span></button>
+        <button class="numbers" id="3" onclick="updateScore(3);"><span id="number3" style="color:black;"></span></button>
+
+    </div>
+
+    <script>
+        var number;
+        var started = false;
+
+        var score = 0;
+        var numDisplay = document.getElementById("num");
+        var scoreDisplay = document.getElementById("score");
+        var number1 = document.getElementById("number1");
+        var number2 = document.getElementById("number2");
+        var number3 = document.getElementById("number3");
+
+        var random1;
+        var random2;
+        var random3;
+        var refreshInterval;
+
+        function startGame() {
+            if (!started) {
+                number = prompt("Choose a number between 0 and 9");
+                if (number == null || number == "") {
+                    alert("Enter a field to start the game.");
+                    return false;
+                }
+
+                if (isNaN(number)) {
+                    alert("The input must be a number.");
+                    return false;
+                } else if (parseInt(number) < 0 || parseInt(number) > 9) {
+                    alert("The number entered must be between 0 and 9");
+                    return false;
+                }
+
+                number = parseInt(number);
+
+                var back = document.getElementById("game");
+                back.style.background = "hsla(0, 0%, 100%,0.5)";
+                back.style.padding = "40px";
+                document.getElementById("a1").style.display = "inline";
+                document.getElementById("a2").style.display = "inline";
+                score = 0;
+
+                numDisplay.innerHTML = number;
+                scoreDisplay.innerHTML = score;
+                changeNumber();
+
+                refreshInterval = setInterval(changeNumber, 1000);
+
+                started = true;
+            } else {
+
+                alert("You must stop the game before you start it again!");
+            }
+        }
+
+        function updateScore(choice) {
+
+            if (!started) {
+                alert("You cannot play the game in stop mode!");
+                return false;
+            }
+
+            switch (choice) {
+
+                case 1:
+                    if (random1 == number) {
+                        score++;
+                        scoreDisplay.innerHTML = score;
+                    } else {
+                        score--;
+                        scoreDisplay.innerHTML = score;
+                    }
+                    break;
+
+                case 2:
+                    if (random2 == number) {
+                        score++;
+                        scoreDisplay.innerHTML = score;
+                    } else {
+                        score--;
+                        scoreDisplay.innerHTML = score;
+                    }
+                    break;
+
+                case 3:
+                    if (random3 == number) {
+                        score++;
+                        scoreDisplay.innerHTML = score;
+                    } else {
+                        score--;
+                        scoreDisplay.innerHTML = score;
+                    }
+                    break;
+
+            }
+
+        }
+
+        function changeNumber() {
+
+            random1 = Math.floor(Math.random() * 10);
+            random2 = Math.floor(Math.random() * 10);
+            random3 = Math.floor(Math.random() * 10);
+            number1.innerHTML = random1;
+            number2.innerHTML = random2;
+            number3.innerHTML = random3;
+
+        }
+
+        function stopGame() {
+
+            if (!started) {
+                alert("You must start/re-start the game before you can stop it!");
+                return false;
+            }
+            clearInterval(refreshInterval);
+            started = false;
+
+        }
+    </script>
+</body>
+
+</html>
